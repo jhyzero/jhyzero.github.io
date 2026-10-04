@@ -1,0 +1,33 @@
+title: "jhyzero"
+tagline: "代码、思考与未完成的探索"
+description: "jhyzero 的个人博客，记录技术、学习与生活。"
+url: "https://jhyzero.github.io"
+baseurl: ""
+lang: "zh-CN"
+timezone: "Asia/Shanghai"
+
+author:
+  name: "jhyzero"
+  github: "jhyzero"
+
+permalink: /articles/:title/
+paginate_path: /page/:num/
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+

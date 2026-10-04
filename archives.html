@@ -1,0 +1,50 @@
+---
+layout: default
+title: 文章
+permalink: /archives/
+description: jhyzero 的全部文章归档。
+---
+
+<section class="page-intro compact">
+  <p class="section-kicker">ARCHIVE</p>
+  <h1>文章与笔记</h1>
+  <p>关于代码、工具、想法，以及偶尔偏离主线的记录。</p>
+</section>
+
+<section class="archive-tools" aria-label="筛选文章">
+  <label class="search-box">
+    <span aria-hidden="true">⌕</span>
+    <span class="sr-only">搜索文章</span>
+    <input type="search" placeholder="搜索标题、摘要或标签…" autocomplete="off" data-search-input>
+  </label>
+  <div class="filter-tags" data-tag-filters>
+    <button class="active" type="button" data-tag="all">全部</button>
+    {% assign all_tags = site.tags | sort %}
+    {% for tag in all_tags %}
+    <button id="tag-{{ tag[0] }}" type="button" data-tag="{{ tag[0] | escape }}">#{{ tag[0] }}</button>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="archive-list" data-archive-list>
+  {% assign posts_by_year = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
+  {% for year in posts_by_year %}
+  <section class="archive-year" data-year-section>
+    <h2>{{ year.name }}</h2>
+    <div>
+      {% for post in year.items %}
+      <article class="archive-item" data-search-item data-title="{{ post.title | downcase | escape }}" data-description="{{ post.description | default: post.excerpt | strip_html | downcase | escape }}" data-tags="{{ post.tags | join: ',' | downcase | escape }}">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%m.%d' }}</time>
+        <div>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.description | default: post.excerpt | strip_html | truncate: 120 }}</p>
+          <div class="tag-list">{% for tag in post.tags %}<span>#{{ tag }}</span>{% endfor %}</div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+  <p class="no-results" data-no-results hidden>没有找到匹配的文章。</p>
+</div>
+

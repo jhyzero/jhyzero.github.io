@@ -1,0 +1,40 @@
+---
+layout: default
+---
+
+<article class="article">
+  <header class="article-header">
+    <a class="back-link" href="{{ '/archives/' | relative_url }}">← 返回文章列表</a>
+    <div class="article-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y年%m月%d日' }}</time>
+      {% assign words = content | number_of_words %}
+      <span>约 {{ words | divided_by: 350 | plus: 1 }} 分钟阅读</span>
+    </div>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="article-lead">{{ page.description }}</p>{% endif %}
+    {% if page.tags.size > 0 %}
+    <div class="tag-list article-tags">
+      {% for tag in page.tags %}<a href="{{ '/archives/#tag-' | append: tag | relative_url }}">#{{ tag }}</a>{% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  <div class="article-body">
+    {{ content }}
+  </div>
+
+  <footer class="article-footer">
+    <p>感谢阅读。</p>
+    <a href="https://github.com/{{ site.author.github }}">在 GitHub 找到我 <span aria-hidden="true">↗</span></a>
+  </footer>
+
+  <nav class="post-navigation" aria-label="文章翻页">
+    {% if page.previous %}
+    <a href="{{ page.previous.url | relative_url }}"><span>上一篇</span><strong>{{ page.previous.title }}</strong></a>
+    {% endif %}
+    {% if page.next %}
+    <a class="next" href="{{ page.next.url | relative_url }}"><span>下一篇</span><strong>{{ page.next.title }}</strong></a>
+    {% endif %}
+  </nav>
+</article>
+
