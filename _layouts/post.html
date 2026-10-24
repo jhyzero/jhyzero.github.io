@@ -9,6 +9,9 @@ layout: default
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y年%m月%d日' }}</time>
       {% assign words = content | number_of_words %}
       <span>约 {{ words | divided_by: 350 | plus: 1 }} 分钟阅读</span>
+      <span class="article-views" title="浏览量从统计功能启用后开始累计">
+        浏览 <span id="busuanzi_page_pv" aria-live="polite">—</span> 次
+      </span>
     </div>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="article-lead">{{ page.description }}</p>{% endif %}
