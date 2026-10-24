@@ -752,6 +752,17 @@ input {
   letter-spacing: 0.04em;
 }
 
+.article-views,
+.article-views img {
+  display: inline-flex;
+  align-items: center;
+}
+
+.article-views img {
+  width: auto;
+  height: 20px;
+}
+
 .article-header h1 {
   margin: 0;
   font-family: var(--serif);

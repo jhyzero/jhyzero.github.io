@@ -10,7 +10,11 @@ layout: default
       {% assign words = content | number_of_words %}
       <span>约 {{ words | divided_by: 350 | plus: 1 }} 分钟阅读</span>
       <span class="article-views" title="浏览量从统计功能启用后开始累计">
-        浏览 <span id="busuanzi_page_pv" aria-live="polite">—</span> 次
+        <img
+          src="https://visitor-badge.one9x.com/badge?page_id={{ page.url | url_encode }}&amp;namespace=jhyzero&amp;unique=true&amp;timeframe=600&amp;left_text=%E6%B5%8F%E8%A7%88&amp;left_color=5d6b7a&amp;right_color=2f74c0"
+          alt="本文浏览次数"
+          width="72"
+          height="20">
       </span>
     </div>
     <h1>{{ page.title }}</h1>
