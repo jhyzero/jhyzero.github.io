@@ -9,13 +9,11 @@ layout: default
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y年%m月%d日' }}</time>
       {% assign words = content | number_of_words %}
       <span>约 {{ words | divided_by: 350 | plus: 1 }} 分钟阅读</span>
-      <span class="article-views" title="浏览量从统计功能启用后开始累计">
-        <img
-          src="https://visitor-badge.one9x.com/badge?page_id={{ page.url | url_encode }}&amp;namespace=jhyzero&amp;unique=true&amp;timeframe=600&amp;left_text=%E6%B5%8F%E8%A7%88&amp;left_color=5d6b7a&amp;right_color=2f74c0"
-          alt="本文浏览次数"
-          width="72"
-          height="20">
-      </span>
+      <span
+        class="article-views"
+        id="article-view-counter"
+        data-counter-src="https://visitor-badge.one9x.com/badge?page_id={{ page.url | url_encode }}&amp;namespace=jhyzero&amp;unique=true&amp;timeframe=600&amp;left_text=%E6%B5%8F%E8%A7%88&amp;left_color=5d6b7a&amp;right_color=2f74c0"
+        title="浏览量从统计功能启用后开始累计"></span>
     </div>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="article-lead">{{ page.description }}</p>{% endif %}
@@ -44,4 +42,49 @@ layout: default
     {% endif %}
   </nav>
 </article>
+
+<script>
+  (function () {
+    var storageKey = 'jhyzero-owner-view-mode';
+    var params = new URLSearchParams(window.location.search);
+    var requestedMode = params.get('owner_view');
+    var ownerMode = false;
+
+    try {
+      if (requestedMode === '1') {
+        window.localStorage.setItem(storageKey, '1');
+      } else if (requestedMode === '0') {
+        window.localStorage.removeItem(storageKey);
+      }
+      ownerMode = window.localStorage.getItem(storageKey) === '1';
+    } catch (error) {
+      ownerMode = requestedMode === '1';
+    }
+
+    if (requestedMode !== null && window.history.replaceState) {
+      params.delete('owner_view');
+      var cleanUrl = window.location.pathname;
+      var query = params.toString();
+      if (query) cleanUrl += '?' + query;
+      cleanUrl += window.location.hash;
+      window.history.replaceState(null, '', cleanUrl);
+    }
+
+    var counter = document.getElementById('article-view-counter');
+    if (!counter) return;
+
+    if (ownerMode) {
+      counter.textContent = '站长预览 · 不计浏览';
+      counter.title = '站长模式已开启，本次访问不会请求浏览量计数器';
+      return;
+    }
+
+    var image = document.createElement('img');
+    image.src = counter.dataset.counterSrc;
+    image.alt = '本文浏览次数';
+    image.width = 72;
+    image.height = 20;
+    counter.appendChild(image);
+  }());
+</script>
 
